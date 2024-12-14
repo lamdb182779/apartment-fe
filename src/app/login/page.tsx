@@ -4,22 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { poster } from "@/service/fetch";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import useSWRMutation from "swr/mutation";
+import { useEffect, useRef, useState } from "react";
 import Verify from "./verify";
+import { authenticate } from "@/service/authenticate";
+import { toast } from "@/hooks/use-toast";
 
 export default function Home() {
 
-    const { trigger, isMutating } = useSWRMutation("/auth/login", poster)
     const [showVerify, setShowVerify] = useState(false)
 
     const router = useRouter()
 
     const [role, setRole] = useState("owner")
     const [roleId, setRoleId] = useState("31")
-    const [id, setId] = useState()
+    const [id, setId] = useState<string | undefined>()
     const usernameRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
 
@@ -66,25 +65,29 @@ export default function Home() {
         const password = passwordRef.current?.value
         const result = roles.find((item) => item.value === role)
         const id = result ? result.id : "31"
-        const user = await trigger({
-            username: username,
-            password: password,
-            role: id
-        })
+        const user = await authenticate(username, password, id)
         if (user) {
-            if (user.message === "Tài khoản này chưa được xác thực!") {
-                setShowVerify(true)
-                setId(user.id)
-                setRoleId(id)
+            if (user?.error) {
+                if (user.error === "Tài khoản này chưa được xác thực!") {
+                    setShowVerify(true)
+                    setId(username)
+                    setRoleId(id)
+                }
+                toast({
+                    description: user.error,
+                    variant: "destructive"
+                })
             } else {
-                localStorage.setItem("access_token", user.access_token)
-                router.push("/")
+                toast({
+                    description: "Đăng nhập thành công",
+                })
+                router.push("/profile")
             }
         }
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen ">
+        <div className="flex items-center justify-center min-h-[92vh] ">
             <div className="w-full max-w-md p-6 rounded-lg shadow dark:shadow-white border">
                 <h2 className="mb-6 text-2xl font-semibold text-center ">Đăng Nhập</h2>
                 <div className="space-y-5">
@@ -111,7 +114,7 @@ export default function Home() {
                         <Input ref={passwordRef} id="password" type="password" placeholder="Nhập mật khẩu" className="mt-1" />
                     </div>
 
-                    <Button disabled={isMutating} onClick={() => handleLogin()} className="w-full">
+                    <Button onClick={() => handleLogin()} className="w-full">
                         Đăng Nhập
                     </Button>
                     <Verify isOpen={showVerify} id={id} role={roleId} handleModal={setShowVerify} />

@@ -1,8 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 import {

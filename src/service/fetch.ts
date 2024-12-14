@@ -1,5 +1,7 @@
+import { auth } from "@/auth"
 import { toast } from "@/hooks/use-toast"
 import axios from "axios"
+import { getSession } from "next-auth/react";
 
 const SERVER_DOMAIN = process.env.NEXT_PUBLIC_SERVER_DOMAIN
 
@@ -8,10 +10,19 @@ export const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(
-    (config) => {
-        const accessToken = localStorage.getItem("access_token");
-        if (accessToken) {
-            config.headers["Authorization"] = `Bearer ${accessToken}`;
+    async (config) => {
+        if (typeof window !== "undefined") {
+            const session = await getSession();
+            const access_token = (session?.user as any)?.access_token
+            if (access_token) {
+                config.headers["Authorization"] = `Bearer ${access_token}`;
+            }
+        } else {
+            const session = await auth()
+            const access_token = (session?.user as any)?.access_token
+            if (access_token) {
+                config.headers["Authorization"] = `Bearer ${access_token}`;
+            }
         }
         return config;
     },

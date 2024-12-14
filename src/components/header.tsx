@@ -1,50 +1,28 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 import Image from 'next/image'
-
-import useSWR from "swr"
-
-import { axiosInstance, fetcher } from "@/service/fetch"
-import { DropdownMenuContent, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem } from "./ui/dropdown-menu"
+import { DropdownMenuContent, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator } from "./ui/dropdown-menu"
 import { LucideLogOut, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { MouseEvent, useEffect } from "react"
+import { MouseEvent } from "react"
 import { Button } from "./ui/button"
 import light from "@/assets/unknown-light.png"
 import dark from "@/assets/unknown-dark.png"
+import ThemeButton from "./theme-button"
+import { signOut, useSession } from "next-auth/react"
 
 export default function Header() {
-    const globals = ["/login"]
 
     const { theme, setTheme } = useTheme()
 
-    const { data, mutate, isLoading } = useSWR(
-        "/profile",
-        fetcher
-    )
+    const { data: session } = useSession()
 
-
-    const router = useRouter()
     const path = usePathname()
 
-    useEffect(() => {
-        if (isLoading === false) {
-            if (!data) {
-                if (!globals.includes(path)) {
-                    handleLogin()
-                }
-            }
-        }
-    }, [isLoading])
-
-    const handleLogin = () => {
-        router.push("/login")
-    }
     const handleLogout = () => {
-        localStorage.removeItem("access_token")
-        handleLogin()
+        signOut()
     }
 
     const handleTheme = (event: MouseEvent) => {
@@ -53,28 +31,32 @@ export default function Header() {
     }
 
     return (
-        <div className="fixed z-[60] w-screen h-[8vh] flex items-center justify-between px-20 text-sm">
-            {data && path !== "/login" ?
+        <div className="fixed z-[60] w-screen md:py-0 py-3 md:h-[8vh] flex items-center justify-between px-6 md:px-20 text-sm">
+            {session?.user && path !== "/login" ?
                 <>
-                    <div></div>
+                    <div>
+                        <ThemeButton /></div>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Image
                                 className="rounded-full"
-                                src={data.image ?? (theme == "dark" ? dark : light)}
+                                src={session?.user.image ?? (theme == "dark" ? dark : light)}
                                 width={32}
                                 height={32}
                                 alt={"avatar"}
                             />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuItem className="cursor-pointer gap-7" onClick={(event: any) => handleTheme(event)}>
-                                Chế độ
-                                <div className="h-[1.2rem] w-[1.2rem] overflow-hidden">
-                                    <Sun className="h-[1.2rem] w-[1.2rem] dark:-mt-[1.2rem]" />
-                                    <Moon className="h-[1.2rem] w-[1.2rem]" />
-                                </div>
+                            <DropdownMenuItem>
+                                <Image
+                                    className="rounded-full"
+                                    src={session?.user.image ?? (theme == "dark" ? dark : light)}
+                                    width={32}
+                                    height={32}
+                                    alt={"avatar"}
+                                />{session?.user.name}
                             </DropdownMenuItem>
+                            <DropdownMenuSeparator />
                             <DropdownMenuItem className="cursor-pointer !text-red-600" onClick={() => handleLogout()}>
                                 <LucideLogOut />
                                 Đăng xuất
