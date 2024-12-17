@@ -4,14 +4,15 @@ import { usePathname } from "next/navigation"
 
 import Image from 'next/image'
 import { DropdownMenuContent, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator } from "./ui/dropdown-menu"
-import { LucideLogOut, Moon, Sun } from "lucide-react"
+import { Bell, HandPlatter, House, LucideLogOut, Moon, ReceiptText, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { MouseEvent } from "react"
+import { MouseEvent, ReactNode } from "react"
 import { Button } from "./ui/button"
 import light from "@/assets/unknown-light.png"
 import dark from "@/assets/unknown-dark.png"
 import ThemeButton from "./theme-button"
 import { signOut, useSession } from "next-auth/react"
+import Link from "next/link"
 
 export default function Header() {
 
@@ -30,12 +31,46 @@ export default function Header() {
         setTheme(theme === 'light' ? 'dark' : 'light')
     }
 
+    const LinkButton = ({ href, children }: { href: string, children: ReactNode }) => {
+        return <Link
+            className="flex items-center dark:hover:bg-neutral-900 hover:bg-neutral-100 rounded-md px-3" href={href}>
+            {children}
+        </Link>
+    }
+
     return (
-        <div className="fixed z-[60] w-screen md:py-0 py-3 md:h-[8vh] flex items-center justify-between px-6 md:px-20 text-sm">
+        <div className="fixed z-[60] w-screen bg-background md:py-0 py-3 md:h-[8vh] flex items-center justify-between px-6 md:px-20 text-sm">
             {session?.user && path !== "/login" ?
                 <>
-                    <div>
-                        <ThemeButton /></div>
+                    <ThemeButton />
+                    <div className="grow md:flex gap-5 hidden">
+                        {(session?.user as any)?.role === 31 && <LinkButton href="/owner/apartments">Danh sách căn hộ</LinkButton>}
+                        {(session?.user as any)?.role === 32 && <LinkButton href="/tentant/apartments">Danh sách căn hộ</LinkButton>}
+                        {(session?.user as any)?.role === 21 && <LinkButton href="/receptionist/apartments">Danh sách căn hộ</LinkButton>}
+                        {(session?.user as any)?.role === 22 && <LinkButton href="/accountant/apartments">Danh sách căn hộ</LinkButton>}
+                        {(session?.user as any)?.role === 23 && <LinkButton href="/technician/apartments">Danh sách căn hộ</LinkButton>}
+                    </div>
+                    <div className="grow md:hidden justify-around flex">
+                        {(session?.user as any)?.role === 31 &&
+                            <>
+                                <LinkButton href="/owner/apartments">
+                                    <House />
+                                </LinkButton>
+                                <LinkButton href="/owner/bills">
+                                    <ReceiptText />
+                                </LinkButton>
+                                <LinkButton href="/owner/services">
+                                    <HandPlatter />
+                                </LinkButton>
+                                <LinkButton href="/owner/notifications">
+                                    <Bell />
+                                </LinkButton>
+                            </>}
+                        {(session?.user as any)?.role === 32 && <LinkButton href="/tentant/apartments">Danh sách căn hộ</LinkButton>}
+                        {(session?.user as any)?.role === 21 && <LinkButton href="/receptionist/apartments">Danh sách căn hộ</LinkButton>}
+                        {(session?.user as any)?.role === 22 && <LinkButton href="/accountant/apartments">Danh sách căn hộ</LinkButton>}
+                        {(session?.user as any)?.role === 23 && <LinkButton href="/technician/apartments">Danh sách căn hộ</LinkButton>}
+                    </div>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Image

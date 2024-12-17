@@ -56,7 +56,7 @@ export default function Home() {
         {
             value: "tentant",
             id: "32",
-            name: "Người thuê"
+            name: "Cư dân"
         },
     ]
 

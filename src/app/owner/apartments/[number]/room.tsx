@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Room({ room }: { room: any }) {
     return (
-        <div>
+        <div className="flex flex-col items-center">
             {room.image ?
 
                 <div className="w-full h-[300px] md:w-[450px] relative">

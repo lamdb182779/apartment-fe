@@ -41,7 +41,7 @@ export default function Apartment({ apartment }: { apartment: any }) {
                 </div>
                 <div className="grid grid-cols-3">
                     <div>
-                        Người thuê
+                        Cư dân
                     </div>
                     <div className="col-span-2">
                         {apartment.tentants?.length > 0 ?
@@ -49,7 +49,7 @@ export default function Apartment({ apartment }: { apartment: any }) {
                                 {apartment.tentants.map((tentant: any) => <>{tentant}<br /></>)}
                             </>
                             :
-                            <>Không có người thuê</>
+                            <>Không có Cư dân</>
                         }
                     </div>
                 </div>

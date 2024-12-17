@@ -19,7 +19,7 @@ export default function Profile({ data }: { data: any }) {
             case 22: return "Kế toán"
             case 23: return "Kỹ thuật viên"
             case 31: return "Chủ hộ"
-            case 32: return "Người thuê"
+            case 32: return "Cư dân"
             default: return "Không rõ quyền hạn"
         }
     }

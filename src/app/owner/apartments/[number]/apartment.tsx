@@ -63,7 +63,7 @@ export default function Apartment({ data }: { data: any }) {
                 </div>
                 <div className="grid grid-cols-3">
                     <div>
-                        Người thuê
+                        Cư dân
                     </div>
                     <div className="col-span-2">
                         {data.tentants?.length > 0 ?
@@ -71,8 +71,32 @@ export default function Apartment({ data }: { data: any }) {
                                 {data.tentants.map((tentant: any) => <>{tentant}<br /></>)}
                             </>
                             :
-                            <>Không có người thuê</>
+                            <>Không có cư dân</>
                         }
+                    </div>
+                </div>
+                <div className="grid grid-cols-3">
+                    <div>
+                        Ban công
+                    </div>
+                    <div className="col-span-2">
+                        {data.hasBalcony ? "Có" : "Không"}
+                    </div>
+                </div>
+                <div className="grid grid-cols-3">
+                    <div>
+                        Đang bảo trì
+                    </div>
+                    <div className="col-span-2">
+                        {data.isMaintaining ? "Có" : "Không"}
+                    </div>
+                </div>
+                <div className="grid grid-cols-3">
+                    <div>
+                        Thanh toán
+                    </div>
+                    <div className="col-span-2">
+                        {data.debt} đồng
                     </div>
                 </div>
             </div>
@@ -83,12 +107,12 @@ export default function Apartment({ data }: { data: any }) {
                             <AccordionTrigger className="font-semibold">
                                 Danh sách các phòng
                             </AccordionTrigger>
-                            <AccordionContent className="space-y-5">
+                            <AccordionContent className="gap-5 grid md:grid-cols-2">
                                 {data.rooms.map((room: any) =>
                                     <Room key={room.id} room={room} />
                                 )}
-                                <div >
-                                    Hành lang, ban công, không gian khác: {data.acreage - data.rooms.reduce((sum: number, room: any) => sum + parseFloat(room.acreage), 0)}m&#178;
+                                <div className="col-span-full md:w-[450px]">
+                                    Không gian khác: {data.acreage - data.rooms.reduce((sum: number, room: any) => sum + parseFloat(room.acreage), 0)}m&#178;
                                 </div>
 
                             </AccordionContent>
