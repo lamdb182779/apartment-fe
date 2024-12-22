@@ -33,17 +33,17 @@ export default function Header() {
 
     const LinkButton = ({ href, children }: { href: string, children: ReactNode }) => {
         return <Link
-            className="flex items-center dark:hover:bg-neutral-900 hover:bg-neutral-100 rounded-md px-3" href={href}>
+            className="flex items-center md:h-[8vh] dark:hover:bg-neutral-900 hover:bg-neutral-100 px-3" href={href}>
             {children}
         </Link>
     }
 
     return (
-        <div className="fixed z-[60] w-screen bg-background md:py-0 py-3 md:h-[8vh] flex items-center justify-between px-6 md:px-20 text-sm">
+        <div className="fixed z-[60] w-screen bg-foreground md:py-0 py-3 md:h-[8vh] flex items-center justify-between px-6 md:px-20 text-sm">
             {session?.user && path !== "/login" ?
                 <>
                     <ThemeButton />
-                    <div className="grow md:flex gap-5 hidden">
+                    <div className="grow md:flex gap-5 hidden px-10">
                         {(session?.user as any)?.role === 31 && <LinkButton href="/owner/apartments">Danh sách căn hộ</LinkButton>}
                         {(session?.user as any)?.role === 32 && <LinkButton href="/tentant/apartments">Danh sách căn hộ</LinkButton>}
                         {(session?.user as any)?.role === 21 && <LinkButton href="/receptionist/apartments">Danh sách căn hộ</LinkButton>}

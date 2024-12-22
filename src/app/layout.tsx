@@ -40,7 +40,7 @@ export default async function RootLayout({
         >
           <NextAuthWrapper>
             <Header />
-            <div className="pt-16 md:pt-[8vh] px-6 md:px-20">
+            <div className="pt-16 md:pt-[12vh] px-6 md:px-20">
               {children}
             </div>
           </NextAuthWrapper>
