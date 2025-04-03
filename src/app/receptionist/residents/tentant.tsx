@@ -8,9 +8,9 @@ import PaginationC from "@/components/pagination";
 import { fetcher } from "@/service/fetch";
 import { Plus } from "lucide-react";
 
-export default function TentantList({ name }: { name: string }) {
+export default function TenantList({ name }: { name: string }) {
     const [page, setPage] = useState(1)
-    const { data, isLoading } = useSWR(`tentants?current=${page}&name=${name}`, fetcher)
+    const { data, isLoading } = useSWR(`tenants?current=${page}&name=${name}`, fetcher)
     const handleCreate = () => {
 
     }

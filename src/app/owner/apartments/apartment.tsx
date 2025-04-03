@@ -44,9 +44,9 @@ export default function Apartment({ apartment }: { apartment: any }) {
                         Cư dân
                     </div>
                     <div className="col-span-2">
-                        {apartment.tentants?.length > 0 ?
+                        {apartment.tenants?.length > 0 ?
                             <>
-                                {apartment.tentants.map((tentant: any) => <>{tentant}<br /></>)}
+                                {apartment.tenants.map((tenant: any) => <>{tenant}<br /></>)}
                             </>
                             :
                             <>Không có Cư dân</>

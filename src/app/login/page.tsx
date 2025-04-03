@@ -54,7 +54,7 @@ export default function Home() {
             name: "Chủ căn hộ"
         },
         {
-            value: "tentant",
+            value: "tenant",
             id: "32",
             name: "Cư dân"
         },

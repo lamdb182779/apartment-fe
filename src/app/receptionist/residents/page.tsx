@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import OwnerList from './owner';
-import TentantList from './tentant';
+import TenantList from './tenant';
 
 export default function Home() {
     const [name, setName] = useState('');
@@ -23,7 +23,7 @@ export default function Home() {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="owner">Chủ hộ</SelectItem>
-                            <SelectItem value="tentant">Cư dân</SelectItem>
+                            <SelectItem value="tenant">Cư dân</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -42,7 +42,7 @@ export default function Home() {
             {role === "owner" ?
                 <OwnerList name={name} />
                 :
-                <TentantList name={name} />
+                <TenantList name={name} />
             }
         </div>
     );
