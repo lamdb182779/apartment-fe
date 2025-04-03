@@ -47,145 +47,36 @@ export default async function Home({ params, searchParams }: { params: { number:
                 "align": "center"
             },
             {
-                "type": "table",
+                "type": "p",
                 "children": [
                     {
-                        "type": "tr",
-                        "children": [
-                            {
-                                "type": "td",
-                                "children": [
-                                    {
-                                        "type": "p",
-                                        "children": [
-                                            {
-                                                "text": "Khách hàng: Đặng Bảo Lâm"
-                                            }
-                                        ],
-                                        "id": "wqwne"
-                                    }
-                                ],
-                                "id": "5fco7",
-                                "borders": {
-                                    "top": {
-                                        "size": 0
-                                    },
-                                    "bottom": {
-                                        "size": 0
-                                    },
-                                    "left": {
-                                        "size": 0
-                                    },
-                                    "right": {
-                                        "size": 0
-                                    }
-                                }
-                            },
-                            {
-                                "type": "td",
-                                "children": [
-                                    {
-                                        "type": "p",
-                                        "children": [
-                                            {
-                                                "text": "Căn hộ: 101"
-                                            }
-                                        ],
-                                        "id": "pb3pl"
-                                    }
-                                ],
-                                "id": "24fi0",
-                                "borders": {
-                                    "bottom": {
-                                        "size": 0
-                                    },
-                                    "left": {
-                                        "size": 0
-                                    },
-                                    "right": {
-                                        "size": 0
-                                    },
-                                    "top": {
-                                        "size": 0
-                                    }
-                                }
-                            }
-                        ],
-                        "id": "0d9xq"
-                    },
-                    {
-                        "type": "tr",
-                        "children": [
-                            {
-                                "type": "td",
-                                "children": [
-                                    {
-                                        "type": "p",
-                                        "children": [
-                                            {
-                                                "text": "Mã hóa đơn: 86f0ebe5-c00c-41eb-82cb-d1cc67eb632f"
-                                            }
-                                        ],
-                                        "id": "s4asr"
-                                    }
-                                ],
-                                "id": "end26",
-                                "borders": {
-                                    "bottom": {
-                                        "size": 0
-                                    },
-                                    "top": {
-                                        "size": 0
-                                    },
-                                    "right": {
-                                        "size": 0
-                                    },
-                                    "left": {
-                                        "size": 0
-                                    }
-                                }
-                            },
-                            {
-                                "type": "td",
-                                "children": [
-                                    {
-                                        "type": "p",
-                                        "children": [
-                                            {
-                                                "text": "Ngày: 16/12/2024"
-                                            }
-                                        ],
-                                        "id": "2dvog"
-                                    }
-                                ],
-                                "id": "6ez04",
-                                "borders": {
-                                    "bottom": {
-                                        "size": 0
-                                    },
-                                    "right": {
-                                        "size": 0
-                                    }
-                                }
-                            }
-                        ],
-                        "id": "mzaha"
+                        "text": `Khách hàng: ${checkOwner}`,
                     }
                 ],
-                "id": "frqht",
-                "colSizes": [
-                    896,
-                    0
-                ]
             },
             {
                 "type": "p",
                 "children": [
                     {
-                        "text": ""
+                        "text": `Căn hộ: ${number}`,
                     }
                 ],
-                "id": "ke8j6"
+            },
+            {
+                "type": "p",
+                "children": [
+                    {
+                        "text": `Mã hóa đơn: ${id}`,
+                    }
+                ],
+            },
+            {
+                "type": "p",
+                "children": [
+                    {
+                        "text": `Ngày: ${format(new Date(), "dd/MM/yyyy")}`,
+                    }
+                ],
             },
             {
                 "type": "table",
@@ -674,15 +565,6 @@ export default async function Home({ params, searchParams }: { params: { number:
                 "id": "d74yw"
             },
             {
-                "type": "p",
-                "children": [
-                    {
-                        "text": ""
-                    }
-                ],
-                "id": "foyo3"
-            },
-            {
                 "type": "table",
                 "children": [
                     {
@@ -868,15 +750,6 @@ export default async function Home({ params, searchParams }: { params: { number:
                 ],
                 "id": "i8wo7"
             },
-            {
-                "type": "p",
-                "children": [
-                    {
-                        "text": ""
-                    }
-                ],
-                "id": "1gk3i"
-            }
         ]
         return <NewBill id={id} tp={"Dịch vụ điện nước"} tit={`Hóa đơn dịch vụ điện nước tháng ${format(date, "MM/yyyy")}`} number={params.number} initial={initial} curAmount={curAmount} />
     }

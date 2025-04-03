@@ -7,9 +7,9 @@ export default async function Home() {
     const data = await axiosInstance.get("/owners/apartments").then(res => res.data).catch(error => { })
     return (
         <div className="space-y-2">
-            <Label className="font-semibold text-center">
+            {/* <Label className="font-semibold text-center">
                 Danh sách căn hộ
-            </Label>
+            </Label> */}
             <Apartments data={data} />
         </div>
     )

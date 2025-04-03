@@ -40,7 +40,7 @@ export default async function RootLayout({
         >
           <NextAuthWrapper>
             <Header />
-            <div className="pt-16 md:pt-[12vh] px-6 md:px-20">
+            <div className="pt-16 md:py-[10vh] px-6 md:pr-16 md:pl-[calc(4rem+18%)]">
               {children}
             </div>
           </NextAuthWrapper>

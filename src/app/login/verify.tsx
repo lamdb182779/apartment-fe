@@ -64,7 +64,7 @@ export default function Verify({
                     <span className="sr-only">Close</span>
                 </DialogClose>
                 <DialogHeader>
-                    <h2 className="mb-4 text-2xl font-semibold text-center">Xác thực email</h2>
+                    <h5 className="mb-4 font-semibold text-center">Xác thực email</h5>
                 </DialogHeader>
                 <div className="space-y-2">
                     <div className="text-center">Nhập mã OTP</div>

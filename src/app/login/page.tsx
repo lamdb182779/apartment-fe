@@ -89,7 +89,7 @@ export default function Home() {
     return (
         <div className="flex items-center justify-center min-h-[92vh] ">
             <div className="w-full max-w-md p-6 rounded-lg shadow dark:shadow-white border">
-                <h2 className="mb-6 text-2xl font-semibold text-center ">Đăng Nhập</h2>
+                <h5 className="mb-6 text-2xl font-semibold text-center ">Đăng Nhập</h5>
                 <div className="space-y-5">
                     <div>
                         <Label htmlFor="role">Vai Trò</Label>

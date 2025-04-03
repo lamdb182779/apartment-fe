@@ -32,7 +32,7 @@ export default function Apartment({ data }: { data: any }) {
     } satisfies ChartConfig
 
     return (
-        <div className="space-y-5">
+        <div className="space-y-5 ">
             <div className="space-y-2">
                 <Label className="font-semibold">
                     Phòng {data.number}

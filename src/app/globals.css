@@ -149,3 +149,26 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+body::-webkit-scrollbar{
+  width: 0;
+}
+
+h1{
+  @apply text-9xl;
+}
+h2{
+  @apply text-7xl;
+}
+h3{
+  @apply text-5xl;
+}
+h4{
+  @apply text-3xl;
+}
+h5{
+  @apply text-xl;
+}
+h6{
+  @apply text-base;
+}
