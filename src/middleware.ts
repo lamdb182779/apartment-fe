@@ -12,13 +12,13 @@ export default middleware((req) => {
     }
     if ((session?.user as any)?.role !== 31 && req.nextUrl.pathname.startsWith("/owner")) {
         if ((session?.user as any).role !== 31 && req.nextUrl.pathname === "/owner/bills") {
-            const newUrl = new URL("/tenant/bills", req.nextUrl.origin);
+            const newUrl = new URL("/resident/bills", req.nextUrl.origin);
             return Response.redirect(newUrl);
         }
         const newUrl = new URL("/profile", req.nextUrl.origin);
         return Response.redirect(newUrl);
     }
-    if ((session?.user as any)?.role !== 32 && req.nextUrl.pathname.startsWith("/tenant")) {
+    if ((session?.user as any)?.role !== 32 && req.nextUrl.pathname.startsWith("/resident")) {
         const newUrl = new URL("/profile", req.nextUrl.origin);
         return Response.redirect(newUrl);
     }

@@ -70,7 +70,7 @@ export default function Header() {
                                 <LinkButton href="/notifications">Thông báo</LinkButton>
                             </>
                         }
-                        {(session?.user as any)?.role === 32 && <LinkButton href="/tenant/apartments">Danh sách căn hộ</LinkButton>}
+                        {(session?.user as any)?.role === 32 && <LinkButton href="/resident/apartments">Danh sách căn hộ</LinkButton>}
                         {(session?.user as any)?.role === 21 &&
                             <>
                                 <LinkButton href="/receptionist/apartments">Danh sách căn hộ</LinkButton>
@@ -97,7 +97,7 @@ export default function Header() {
                                         <Bell />
                                     </LinkButton>
                                 </>}
-                            {(session?.user as any)?.role === 32 && <LinkButton href="/tenant/apartments">Danh sách căn hộ</LinkButton>}
+                            {(session?.user as any)?.role === 32 && <LinkButton href="/resident/apartments">Danh sách căn hộ</LinkButton>}
                             {(session?.user as any)?.role === 21 && <LinkButton href="/receptionist/apartments">Danh sách căn hộ</LinkButton>}
                             {(session?.user as any)?.role === 22 && <LinkButton href="/accountant/apartments">Danh sách căn hộ</LinkButton>}
                             {(session?.user as any)?.role === 23 && <LinkButton href="/technician/apartments">Danh sách căn hộ</LinkButton>}
@@ -184,7 +184,7 @@ export default function Header() {
                         </>
                     }
                     {(session?.user as any)?.role === 32 &&
-                        <Button className="text-base h-12 justify-start" size={"lg"} onClick={() => router.push("/tenant/apartments")} >
+                        <Button className="text-base h-12 justify-start" size={"lg"} onClick={() => router.push("/resident/apartments")} >
                             <div className="scale-[1.3] mr-1"><House /></div>Danh sách căn hộ
                         </Button>}
                     {(session?.user as any)?.role === 21 &&
