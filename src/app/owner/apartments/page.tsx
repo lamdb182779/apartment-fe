@@ -10,7 +10,7 @@ export default async function Home() {
             {/* <Label className="font-semibold text-center">
                 Danh sách căn hộ
             </Label> */}
-            <Apartments data={data} />
+            <Apartments data={data.sort((a: any, b: any) => a.number - b.number)} />
         </div>
     )
 }

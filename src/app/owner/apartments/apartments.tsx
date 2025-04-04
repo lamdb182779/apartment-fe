@@ -1,18 +1,15 @@
 "use client"
 
 import Apartment from "./apartment";
-import { Accordion } from "@/components/ui/accordion";
 
 export default function Apartments({ data }: { data: any }) {
     return (
-        <div>
+        <div className="gap-5 grid grid-cols-2">
             {data?.length > 0 ?
                 <>
-                    <Accordion type="multiple">
-                        {data.map((apartment: any) =>
-                            <Apartment key={apartment.number} apartment={apartment} />
-                        )}
-                    </Accordion>
+                    {data.map((apartment: any) =>
+                        <Apartment key={apartment.number} apartment={apartment} />
+                    )}
                 </>
                 :
                 <>

@@ -1,59 +1,20 @@
 "use client"
-
-import {
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
 import Link from "next/link"
+import apart from "@/assets/apartment-avatar.jpeg"
+import Image from "next/image"
 
 export default function Apartment({ apartment }: { apartment: any }) {
     return (
-        <AccordionItem value={apartment.number}>
-            <AccordionTrigger>
-                Căn hộ {apartment.number}
-            </AccordionTrigger>
-            <AccordionContent className="space-y-2">
-                <div className="grid grid-cols-3">
-                    <div>
-                        Tầng
-                    </div>
-                    <div>
-                        {apartment.floor}
-                    </div>
-                    <Link className="text-end" href={`/owner/apartments/${apartment.number}`} >Xem chi tiết</Link>
-                </div>
-                <div className="grid grid-cols-3">
-                    <div>
-                        Trục
-                    </div>
-                    <div className="col-span-2">
-                        {apartment.axis}
-                    </div>
-                </div>
-                <div className="grid grid-cols-3">
-                    <div>
-                        Diện tích
-                    </div>
-                    <div className="col-span-2">
-                        {apartment.acreage}
-                    </div>
-                </div>
-                <div className="grid grid-cols-3">
-                    <div>
-                        Cư dân
-                    </div>
-                    <div className="col-span-2">
-                        {apartment.tenants?.length > 0 ?
-                            <>
-                                {apartment.tenants.map((tenant: any) => <>{tenant}<br /></>)}
-                            </>
-                            :
-                            <>Không có Cư dân</>
-                        }
-                    </div>
-                </div>
-            </AccordionContent>
-        </AccordionItem>
+        <div className="rounded-lg border col-span-1 cursor-pointer">
+            <Image
+                className="object-cover object-center rounded-t-lg"
+                src={apartment?.image ? apartment.image : apart}
+                alt={apartment.number || ""} />
+            <div className="p-5 text-sm">
+                <div className="font-semibold">Căn hộ {apartment.number}</div>
+                { }
+            </div>
+        </div>
+
     )
 }
