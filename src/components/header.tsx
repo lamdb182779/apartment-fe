@@ -57,7 +57,7 @@ export default function Header() {
 
     return (
         <>
-            <div className="fixed z-[60] h-[50px] w-screen md:h-[8vh] flex items-center justify-between px-6 md:px-20 text-sm">
+            <div className="fixed z-[60] h-[50px] w-screen md:h-0 flex items-center justify-between px-6 md:px-20 text-sm">
                 {session?.user && path !== "/login" ?
                     <>
                         {/* <ThemeButton /> */}

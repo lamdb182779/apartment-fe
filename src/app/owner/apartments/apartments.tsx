@@ -1,5 +1,3 @@
-"use client"
-
 import Apartment from "./apartment";
 
 export default function Apartments({ data }: { data: any }) {
