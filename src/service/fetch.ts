@@ -1,5 +1,5 @@
 import { auth } from "@/auth"
-import { toast } from "@/hooks/use-toast"
+import { toast } from "react-toastify"
 import axios from "axios"
 import { getSession } from "next-auth/react";
 
@@ -46,30 +46,20 @@ export const updater = async (path: string, { arg }: { arg: object }) => axiosIn
     withCredentials: true
 })
     .then(res => {
-        toast({
-            description: res?.data?.message || "Cập nhật thành công!"
-        })
+        toast.success(res?.data?.message || "Cập nhật thành công!")
         return res.data
     }).catch(error => {
-        toast({
-            description: error?.response?.data?.message || "Cập nhật thất bại!",
-            variant: "destructive"
-        })
+        toast.error(error?.response?.data?.message || "Cập nhật thất bại!")
     })
 
 export const poster = async (path: string, { arg }: { arg: object }) => axiosInstance.post(path, arg, {
     withCredentials: true
 })
     .then(res => {
-        toast({
-            description: res?.data?.message || "Thêm mới thành công!"
-        })
+        toast.success(res?.data?.message || "Thêm mới thành công!")
         return res.data
     }).catch(error => {
-        toast({
-            description: error?.response?.data?.message || "Thêm mới thất bại!",
-            variant: "destructive"
-        })
+        toast.error(error?.response?.data?.message || "Thêm mới thất bại!")
     })
 
 export const deleter = async (path: string, { arg }: { arg: object }) => axiosInstance.delete(path, {
@@ -77,13 +67,8 @@ export const deleter = async (path: string, { arg }: { arg: object }) => axiosIn
     withCredentials: true
 })
     .then(res => {
-        toast({
-            description: res?.data?.message || "Xóa thành công!"
-        })
+        toast.success(res?.data?.message || "Xóa thành công!")
         return res.data
     }).catch(error => {
-        toast({
-            description: error?.response?.data?.message || "Xóa thất bại!",
-            variant: "destructive"
-        })
+        toast.error(error?.response?.data?.message || "Xóa thất bại!")
     })

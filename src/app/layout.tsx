@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/header";
 import { ThemeProvider } from "next-themes";
-import { Toaster } from "@/components/ui/toaster";
 import NextAuthWrapper from "@/service/next-auth-wrapper";
 
 const geistSans = localFont({
@@ -45,7 +44,6 @@ export default async function RootLayout({
             </div>
           </NextAuthWrapper>
         </ThemeProvider>
-        <Toaster />
       </body>
     </html>
   );

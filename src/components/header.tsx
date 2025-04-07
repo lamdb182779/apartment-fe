@@ -17,6 +17,7 @@ import Link from "next/link"
 import autosize from 'autosize'
 import { cn } from "@/lib/utils"
 import React from "react"
+import { Bounce, ToastContainer } from 'react-toastify'
 
 export default function Header() {
 
@@ -57,6 +58,19 @@ export default function Header() {
 
     return (
         <>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
             <div className="fixed z-[60] h-[50px] w-screen md:h-0 flex items-center justify-between px-6 md:px-20 text-sm">
                 {session?.user && path !== "/login" ?
                     <>
@@ -143,7 +157,7 @@ export default function Header() {
                     </>
                 }
             </div>
-            <div className="hidden bg-background fixed md:flex md:flex-col w-[18vw] h-screen border-r border-neutral-300">
+            <div className="hidden fixed md:flex md:flex-col w-[18vw] h-screen border-r border-neutral-300">
                 <Image
                     src={logo}
                     alt={"avatar"}
@@ -210,6 +224,7 @@ export default function Header() {
                         </Button>}
                 </div>
             </div>
+            <div className="fixed w-screen h-screen bg-gradient-to-br from-white to-yellow-50 z-[-1]"></div>
         </>
     )
 }
