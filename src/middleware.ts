@@ -2,7 +2,7 @@ import { auth as middleware } from "@/auth"
 
 export default middleware((req) => {
     const session = req.auth
-    if (!session && req.nextUrl.pathname !== "/login") {
+    if (!session && (req.nextUrl.pathname !== "/login" && !req.nextUrl.pathname.startsWith("/guest") && req.nextUrl.pathname !== "/")) {
         const newUrl = new URL("/login", req.nextUrl.origin);
         return Response.redirect(newUrl);
     }

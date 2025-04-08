@@ -7,28 +7,91 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import avatar from "@/assets/apartment-avatar.jpeg"
+import Room from "./room"
+import { CldUploadWidget, CloudinaryUploadWidgetResults } from 'next-cloudinary'
+import { Hammer, ListRestart, Plus, RotateCcw, Save } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import _ from "lodash"
+import useSWRMutation from "swr/mutation"
+import { updater } from "@/service/fetch"
+import { useRouter } from "next/navigation"
 
 export default function Setup({ data }: { data: any }) {
 
-    const [title, setTitle] = useState(data.adTitle)
-    const [price, setPrice] = useState(data.rentPrice)
-    const [advertisement, setAdvertisement] = useState(data.advertisement)
-    const [rooms, setRooms] = useState(data.rooms)
+    const [title, setTitle] = useState(data.adTitle || "")
+    const [price, setPrice] = useState(data.rentPrice || 0)
+    const [advertisement, setAdvertisement] = useState(data.advertisement || "")
+    const [image, setImage] = useState(data.image || "")
+    const [rooms, setRooms] = useState([...data.rooms])
+
+    const { trigger, isMutating } = useSWRMutation(`/apartments/rental-info/${data.number}`, updater)
+
+    const router = useRouter()
 
     const handleRoomChange = (index: number, field: string, value: any) => {
         const updated = [...rooms]
         updated[index][field] = value
-        setRooms(updated)
+        setRooms([...updated])
     }
 
-    const handleSubmit = () => {
-        // Gọi API cập nhật
-        console.log({ title, price, advertisement, rooms })
-        // updateApartment(...)
+    const handleRemoveRoom = (index: number) => {
+        setRooms((pre: any) => pre.slice(0, index).concat(pre.slice(index + 1)))
+    }
+
+    const handleAddRoom = () => {
+        setRooms((pre: any) => [{ type: 0, name: "Chưa đặt tên", image: "", acreage: 0 }, ...pre])
+    }
+
+    const handleSubmit = async () => {
+        const update = await trigger({
+            adTitle: title,
+            rentPrice: price,
+            advertisement,
+            rooms,
+            image
+        })
+        if (update) router.push(`/owner/apartments/${data.number}`)
+    }
+
+    const handleResetList = () => {
+        setTitle(data.adTitle || "")
+        setPrice(data.rentPrice || 0)
+        setAdvertisement(data.advertisement || "")
+        setImage(data.image || "")
+    }
+
+    const handleResetRooms = () => {
+        setRooms([...data.rooms])
+    }
+
+    const handleResetAll = () => {
+        setTitle(data.adTitle || "")
+        setPrice(data.rentPrice || 0)
+        setAdvertisement(data.advertisement || "")
+        setImage(data.image || "")
+        setRooms([...data.rooms])
+    }
+
+    const handleUpload = (result: CloudinaryUploadWidgetResults) => {
+        setImage((pre: string) => ((result?.info as any)?.secure_url || pre))
     }
 
     return (
         <div className="space-y-6">
+            <div className="fixed flex flex-col top-16 right-16 bg-background rounded-full border p-1 z-[5]">
+                <Button disabled={isMutating} size={"icon"} title="Lưu thông tin" className="rounded-full" variant={"ghost"} onClick={() => handleSubmit()}>
+                    <Save />
+                </Button>
+                <Button size={"icon"} title="Hoàn tác thông tin tổng quan" className="rounded-full" variant={"ghost"} onClick={() => handleResetList()}>
+                    <ListRestart />
+                </Button>
+                <Button size={"icon"} title="Hoàn tác thông tin phòng" className="rounded-full" variant={"ghost"} onClick={() => handleResetRooms()}>
+                    <Hammer />
+                </Button>
+                <Button size={"icon"} title="Hoàn tác tất cả" className="rounded-full" variant={"ghost"} onClick={() => handleResetAll()}>
+                    <RotateCcw />
+                </Button>
+            </div>
             <div className="grid grid-cols-2 gap-4">
                 <div>
                     <div className="grid grid-cols-3 gap-4">
@@ -41,8 +104,9 @@ export default function Setup({ data }: { data: any }) {
                         </div>
                         <div>
                             <Label className="font-medium">Mức giá</Label>
-                            <div className="text-sm flex gap-2 whitespace-nowrap items-center">
+                            <div className="text-sm flex whitespace-nowrap items-center border rounded-sm pr-1 focus-within:ring-ring focus-within:ring-1">
                                 <Input
+                                    className="border-none focus-visible:ring-0 shadow:none px-1"
                                     type="number"
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
@@ -59,58 +123,46 @@ export default function Setup({ data }: { data: any }) {
                         />
                     </div>
                 </div>
-                <div>
-                    <Image
-                        className="object-cover object-center rounded"
-                        src={data?.image ? data.image : avatar}
-                        alt={data.number || ""} />
-                </div>
-
+                <CldUploadWidget
+                    uploadPreset={process.env.NEXT_PUBLIC_UPLOAD_PRESET_APT}
+                    onSuccess={result => handleUpload(result)}
+                    onQueuesEnd={(result, { widget }) => {
+                        widget.close();
+                    }}
+                >
+                    {({ open }) => {
+                        return (
+                            <div onClick={() => open()} className="cursor-pointer relative w-full aspect-[16/9]">
+                                <div className="w-full h-full absolute bg-gradient-to-b from-white to-black opacity-0 hover:opacity-50 flex z-[1]">
+                                    <h6 className="text-white font-medium opacity-100 text-center self-end w-full">
+                                        Đổi ảnh đại diện
+                                    </h6>
+                                </div>
+                                <Image
+                                    className="object-cover object-center rounded"
+                                    fill
+                                    src={image || avatar}
+                                    alt={data.number || ""} />
+                            </div>
+                        );
+                    }}
+                </CldUploadWidget>
             </div>
-
-            <div>
-                <h5 className="font-semibold mb-2">Danh sách phòng</h5>
+            <div className="space-y-3">
+                <div className="flex gap-3 items-center">
+                    <h6 className="font-semibold">Danh sách phòng căn hộ {data.number}</h6>
+                    <Button size={"icon"} className="rounded-full" variant={"ghost"} onClick={() => handleAddRoom()}>
+                        <Plus />
+                    </Button>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {rooms.map((room: any, index: number) => (
-                        <div key={room.id} className="p-4 border rounded space-y-2">
-                            <Input
-                                value={room.name}
-                                onChange={(e) => handleRoomChange(index, "name", e.target.value)}
-                            />
-                            <Input
-                                type="number"
-                                value={room.acreage}
-                                onChange={(e) => handleRoomChange(index, "acreage", Number(e.target.value))}
-                            />
-                            <div className="relative w-full aspect-[16/9] bg-gray-100 rounded overflow-hidden">
-                                <Image
-                                    src={room.image}
-                                    alt={room.name}
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                            <Input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => {
-                                    const file = e.target.files?.[0]
-                                    if (file) {
-                                        handleRoomChange(index, "image", URL.createObjectURL(file))
-                                    }
-                                }}
-                            />
-                        </div>
+                        <Room key={index} room={room} index={index}
+                            handleRoomChange={handleRoomChange}
+                            handleRemoveRoom={handleRemoveRoom} />
                     ))}
                 </div>
             </div>
-
-            <button
-                onClick={handleSubmit}
-                className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
-            >
-                Lưu thay đổi
-            </button>
         </div>
     )
 }

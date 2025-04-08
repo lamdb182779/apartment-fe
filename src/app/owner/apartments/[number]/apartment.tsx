@@ -76,7 +76,7 @@ export default function Apartment({ data }: { data: any }) {
                     <div className="font-semibold col-span-2 pl-2 border border-neutral-300 border-r-0 border-b-0">Đang bảo trì:</div> <div className="border-t border-r border-neutral-300">Không</div>
 
                     <div className="font-semibold col-span-2 pl-2 border border-neutral-300 border-r-0">
-                        Cư dân:{data.residents.map(() => <br />)}
+                        Cư dân:{data.residents.map((index: number) => <br key={index} />)}
                     </div>
                     <div className="col-span-4 border border-l-0 border-neutral-300">
                         {data.residents?.length > 0 ?
@@ -87,12 +87,6 @@ export default function Apartment({ data }: { data: any }) {
                             <>Không có cư dân</>
                         }
                     </div>
-
-                    {data?.advertisement &&
-                        <div className="col-span-4">
-                            <Textarea disabled className="border-none shadow-none" value={data.advertisement} />
-
-                        </div>}
                 </div>
                 <div className="col-span-1">
                     <ChartContainer config={chartConfigCombined} className="min-h-[300px] w-full">
@@ -192,7 +186,7 @@ export default function Apartment({ data }: { data: any }) {
                         </div>
                     }
                     <div>
-                        {data.rentPrice ? <>Mức giá: <span className="font-semibold"> `${data.rentPrice * 1000000} đồng/tháng`</span></> : <span className="text-sm font-semibold">Không đặt rõ mức giá</span>}
+                        {data.rentPrice > 0 ? <>Mức giá: <span className="font-semibold text-lg"> {(data.rentPrice * 1000000).toLocaleString()} đồng/tháng</span></> : <span className="font-semibold">Không đặt rõ mức giá</span>}
                     </div>
                     <div>
                         {data.rooms && data.rooms.length > 0 ?
@@ -209,9 +203,13 @@ export default function Apartment({ data }: { data: any }) {
                             </>
                         }
                     </div>
-                    <div>
+                    <div className="flex items-end">
                         {data.advertisement ?
-                            <></>
+                            <>
+                                <div className="whitespace-pre-line line-clamp-3">
+                                    {data.advertisement}
+                                </div>
+                            </>
                             :
                             <>
                                 Không có thông tin mô tả
