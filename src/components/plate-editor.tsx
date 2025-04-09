@@ -338,8 +338,9 @@ export function PlateView({ content }: { content: any }) {
           <Editor
             className={cn(
               "border-none",
-              "rounded-none",
-              "text-wrap"
+              "rounded-lg",
+              "text-wrap",
+              "shadow-lg"
             )}
             focusRing={false} />
         </Plate>

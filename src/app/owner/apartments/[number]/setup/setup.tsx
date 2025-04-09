@@ -119,7 +119,6 @@ export default function Setup({ data }: { data: any }) {
                         <Textarea
                             value={advertisement}
                             onChange={(e) => setAdvertisement(e.target.value)}
-                            rows={3}
                         />
                     </div>
                 </div>

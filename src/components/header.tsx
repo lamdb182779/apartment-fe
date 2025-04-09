@@ -226,7 +226,7 @@ export default function Header() {
                                     <ButtonItem
                                         icon={<Bell />}
                                         label="Thông báo"
-                                        link={"/notifications"}
+                                        link={"/customer/notifications"}
                                     />
                                 </>
                             }
